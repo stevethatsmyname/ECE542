@@ -35,11 +35,11 @@ pole_radius = abs(closed_loop_poles)
 
 
 %PI control
-PI_alpha = 0.9; %PI zero location
+PI_alpha = 0.8; %PI zero location
 G_hat_z_num = conv([1, -1*PI_alpha], disc_num)
 G_hat_z_den = conv([1, -1], disc_den);
 
-kp = 0.02;  
+kp = 0.01;  
 PI_T_c_z_num = kp * G_hat_z_num
 PI_T_c_z_den = G_hat_z_den + kp * G_hat_z_num
 PI_system = tf(PI_T_c_z_num, PI_T_c_z_den, T);
@@ -77,5 +77,7 @@ figure; step(PI_system);
 % plot(k,abs(r'));
 
 
-
+KI = (kp) * (1-PI_alpha);
+KP = kp - KI;
+fprintf(1,'T = %.4f, KP = %.4f, KI = %.4f \n',T, KP,KI);
 % 
